@@ -2,6 +2,7 @@
 
 angular.module('coveoFrontendChallengeApp')
   .controller('MainCtrl', function($scope, api) {
+    $scope.isCollapse = true;
     $scope.wines = [];
     api.wineByType({type: 'Merlot'}).then(function(result) {
       console.log(result.data.results);

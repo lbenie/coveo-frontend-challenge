@@ -1,42 +1,88 @@
-.header
-	ul.nav.nav-pills.pull-right
-		li.active
-			a(ng-href="#") Home
-		li
-			a(ng-href="#") About
-		li
-			a(ng-href="#") Contact
-	h3.text-muted coveo frontend challenge
-
-.jumbotron
-	h1 'Allo, 'Allo!
-	p.lead
-		img(src="images/yeoman.png", alt="I'm Yeoman")
-		br
-		| Always a pleasure scaffolding your apps.
-	p
-		a.btn.btn-lg.btn-success(ng-href="#")
-			| Splendid!
-			span.glyphicon.glyphicon-ok
-
-	ul
-		li(ng-repeat='wine in wines')
-			| {{wine.title}}
-			br
-			| {{wine.raw.tpcategorie}}
-			br
-			| {{wine.raw.tpprixnum | currency}}
-.row.marketing
-	h4 HTML5 Boilerplate
-	p HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-
-	h4 Angular
-	p AngularJS is a toolset for building the framework most suited to your application development.
-
-	h4 Karma
-	p Spectacular Test Runner for JavaScript.
-
-.footer
-	p
-		span.glyphicon.glyphicon-heart
-		|  from the Yeoman team
+.nav-side-menu
+	.brand
+		img(src='images/yeoman.png')
+	i.fa.fa-bars.fa-2x.toggle-btn(data-toggle='collapse', data-target='#menu-content')
+	.menu-list
+		ul#menu-content.menu-content.collapse.out
+			li
+				a(href='#')
+					i.fa.fa-dashboard.fa-lg
+					|  Dashboard
+			li.collapsed.active(data-toggle='collapse', data-target='#products')
+				a(href='#')
+					i.fa.fa-gift.fa-lg
+					|  UI Elements 
+					span.arrow
+			ul#products.sub-menu.collapse
+				li.active
+					a(href='#') CSS3 Animation
+				li
+					a(href='#') General
+				li
+					a(href='#') Buttons
+				li
+					a(href='#') Tabs & Accordions
+				li
+					a(href='#') Typography
+				li
+					a(href='#') FontAwesome
+				li
+					a(href='#') Slider
+				li
+					a(href='#') Panels
+				li
+					a(href='#') Widgets
+				li
+					a(href='#') Bootstrap Model
+			li.collapsed(data-toggle='collapse', data-target='#service')
+				a(href='#')
+					i.fa.fa-globe.fa-lg
+					|  Services 
+					span.arrow
+			ul#service.sub-menu.collapse
+				li New Service 1
+				li New Service 2
+				li New Service 3
+			li.collapsed(data-toggle='collapse', data-target='#new')
+				a(href='#')
+					i.fa.fa-car.fa-lg
+					|  New 
+					span.arrow
+			ul#new.sub-menu.collapse
+				li New New 1
+				li New New 2
+				li New New 3
+			li
+				a(href='#')
+					i.fa.fa-user.fa-lg
+					|  Profile
+			li
+				a(href='#')
+					i.fa.fa-users.fa-lg
+					|  Users
+//- MAIN VIEW
+.container
+	.row
+		.col-xs-11.col-xs-offset-2
+			.input-group.padding-t
+				.input-group-btn.search-panel
+					button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+						span#search_concept Filter by
+						span.caret
+					ul.dropdown-menu(role='menu')
+						li
+							a(href='#contains') Contains
+						li
+							a(href='#its_equal') It's equal
+						li
+							a(href='#greather_than') Greather than >
+						li
+							a(href='#less_than') Less than < 
+						li.divider
+						li
+							a(href='#all') Anything
+				input#search_param(type='hidden', name='search_param', value='all')
+				input.form-control(type='text', name='x', placeholder='Search term...')
+				span.input-group-btn
+					button.btn.btn-default(type='button')
+						span.glyphicon.glyphicon-search
