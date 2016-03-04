@@ -5,7 +5,8 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'angular-elastic-grid'
   ])
   .config(function($routeProvider) {
     $routeProvider

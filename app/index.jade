@@ -22,6 +22,8 @@ head
 	// bower:css
 	link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
 	link(rel='stylesheet', href='bower_components/animate.css/animate.css')
+	link(rel='stylesheet', href='bower_components/jquery-elastic-grid/css/elastic_grid.css')
+	link(rel='stylesheet', href='bower_components/angular-elastic-grid/dist/style.css')
 	// endbower
 	// endbuild
 	// build:css(.tmp) styles/main.css
@@ -76,6 +78,13 @@ body(ng-app="coveoFrontendChallengeApp")
 	script(src='bower_components/lodash/lodash.js')
 	script(src='bower_components/restangular/dist/restangular.js')
 	script(src='bower_components/wow/dist/wow.js')
+	script(src='bower_components/jquery-elastic-grid/js/modernizr.custom.js')
+	script(src='bower_components/jquery-elastic-grid/js/classie.js')
+	script(src='bower_components/jquery-elastic-grid/js/elastic_grid.js')
+	script(src='bower_components/jquery-elastic-grid/js/jquery.elastislide.js')
+	script(src='bower_components/jquery-elastic-grid/js/jquery.hoverdir.js')
+	script(src='bower_components/jquery-elastic-grid/js/elastic_grid.encode.js')
+	script(src='bower_components/angular-elastic-grid/dist/angular-elastic-grid.js')
 	// endbower
 	// endbuild
 
@@ -83,5 +92,4 @@ body(ng-app="coveoFrontendChallengeApp")
 	script(src="scripts/app.js")
 	script(src="scripts/controllers/main.js")
 	script(src="scripts/services/api.js")
-	script(src="scripts/directives/card.js")
 	// endbuild
