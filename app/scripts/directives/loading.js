@@ -12,6 +12,7 @@ angular.module('coveoFrontendChallengeApp')
 
         scope.$on('loading-complete', function(e) {
           element.hide();
+          $('#list').addClass('animated zoomIn');
         });
       }
     };

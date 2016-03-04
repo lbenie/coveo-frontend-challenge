@@ -53,12 +53,13 @@ function setupData(value) {
 angular.module('coveoFrontendChallengeApp')
   .controller('MainCtrl', function($scope, api) {
     $scope.wines = [];
-    $scope.elastic = [];
+    $scope.gridItems = [];
 
     api.wineByType({type: 'Merlot'}).then(function(result) {
       angular.forEach(result.data.results, function(value) {
         $scope.wines.push(value.raw);
-        $scope.elastic.push(setupData(value.raw));
+        $scope.gridItems.push(setupData(value.raw));
       });
+
     });
   });
