@@ -58,9 +58,7 @@ angular.module('coveoFrontendChallengeApp')
     api.wineByType({type: 'Merlot'}).then(function(result) {
       angular.forEach(result.data.results, function(value) {
         $scope.wines.push(value.raw);
-        $scope.elastic.push(setupData(value.raw));
-        $('#loader').hide();
-        $('#wineList').show();
+        $scope.elastic.push(setupData(value.raw));  
       });
     });
   });

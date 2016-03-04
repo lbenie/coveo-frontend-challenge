@@ -8,7 +8,7 @@ angular
     'ngRoute',
     'angular-elastic-grid'
   ])
-  .config(function($routeProvider) {
+  .config(function($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -16,5 +16,18 @@ angular
       })
       .otherwise({
         redirectTo: '/'
+      });
+
+      $httpProvider.interceptors.push(function($q, $rootScope) {
+        return {
+          'request': function(config) {
+            $rootScope.$broadcast('loading-started');
+            return config || $q.when(config);
+          },
+          response: function(response) {
+            $rootScope.$broadcast('loading-complete');
+            return response || $q.when(response);
+          }
+        };
       });
   });
