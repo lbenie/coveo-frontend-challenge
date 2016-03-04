@@ -20,7 +20,7 @@ angular
 
       $httpProvider.interceptors.push(function($q, $rootScope) {
         return {
-          'request': function(config) {
+          request: function(config) {
             $rootScope.$broadcast('loading-started');
             return config || $q.when(config);
           },

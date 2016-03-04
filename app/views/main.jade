@@ -61,8 +61,8 @@
 //- 					a(href='#')
 //- 						i.fa.fa-users.fa-lg
 //- 						|  Users
-//- MAIN VIEW
 .section
+	loading.center-loading
 	.container
 		.row
 			.col-md-12
@@ -88,9 +88,5 @@
 					span.input-group-btn
 						button.btn.btn-default(type='button')
 							span.glyphicon.glyphicon-search
-
-.section
-	loading.center-loading
-	.container
 		.row
 			elastic-grid(items='elastic', filter='popup', timeout=1000)
