@@ -54,17 +54,7 @@ angular.module('coveoFrontendChallengeApp')
   .controller('MainCtrl', function($scope, api) {
     $scope.wines = [];
 
-    // api.wineByType({type: 'Merlot'})
-    // .success(function(result) {
-    //   angular.forEach(result.results, function(value) {
-    //     $scope.wines.push(setupData(value.raw));
-    //   });
-    // })
-    // .error(function(error) {
-    //   alert(error);
-    // });
-
-    api.wine()
+    api.simple.wineByType({type: 'Merlot'})
     .success(function(result) {
       angular.forEach(result.results, function(value) {
         $scope.wines.push(setupData(value.raw));
@@ -73,4 +63,14 @@ angular.module('coveoFrontendChallengeApp')
     .error(function(error) {
       alert(error);
     });
+
+    // api.simple.wine()
+    // .success(function(result) {
+    //   angular.forEach(result.results, function(value) {
+    //     $scope.wines.push(setupData(value.raw));
+    //   });
+    // })
+    // .error(function(error) {
+    //   alert(error);
+    // });
   });

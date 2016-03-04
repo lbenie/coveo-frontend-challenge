@@ -9,11 +9,13 @@ angular.module('coveoFrontendChallengeApp')
 
     // Public API here
     return {
-      wineByType: function(options) {
-        return $http.get(baseUrl + '&q=@tpcepagenomsplitgroup==' + options.type);
-      },
-      wine: function() {
-        return $http.get(baseUrl);
+      simple: {
+        wineByType: function(options) {
+          return $http.get(baseUrl + '&q=@tpcepagenomsplitgroup==' + options.type);
+        },
+        wine: function() {
+          return $http.get(baseUrl);
+        }
       }
     };
   });

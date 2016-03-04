@@ -33,8 +33,8 @@ node_modules
 .node_repl_history
 
 
-#dist
-#.tmp
+dist
+.tmp
 .sass-cache
 app/bower_components
 
