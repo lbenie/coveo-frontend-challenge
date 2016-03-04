@@ -6,20 +6,20 @@ function setupData(value) {
   function description() {
     item.description += '<br/><br/>';
 
-    angular.isDefined(item.country) ?
-    item.description += '<i class="fa fa-globe fa-lg"/>' + ' ' + item.country  + '<br/>' : item.description += '';
+    item.description += angular.isDefined(item.country) ?
+    '<i class="fa fa-globe fa-lg"/>' + ' ' + item.country + '<br/>' : '';
 
-    angular.isDefined(item.region) ?
-    item.description += '<i class="fa fa-map-marker fa-lg"/>' + ' ' + item.region + '<br/>' : item.description += '';
+    item.description += angular.isDefined(item.region) ?
+    '<i class="fa fa-map-marker fa-lg"/>' + ' ' + item.region + '<br/>' : '';
 
-    angular.isDefined(item.temperature) ?
-    item.description += '<i class="fa fa-glass fa-lg"/>' + ' ' + item.temperature + '<br/>' : item.description += '';
+    item.description += angular.isDefined(item.temperature) ?
+    '<i class="fa fa-glass fa-lg"/>' + ' ' + item.temperature + '<br/>' : '';
 
-    angular.isDefined(item.producer) ?
-    item.description += '<i class="fa fa-user fa-lg"/>' + ' ' + item.producer + '<br/>' : item.description += '';
+    item.description += angular.isDefined(item.producer) ?
+    '<i class="fa fa-user fa-lg"/>' + ' ' + item.producer + '<br/>' : '';
 
-    angular.isDefined(item.price) ?
-    item.description += '<i class="fa fa-money fa-lg"/>' + ' ' + item.price + '<br/>' : item.description += '';
+    item.description += angular.isDefined(item.price) ?
+    '<i class="fa fa-money fa-lg"/>' + ' ' + item.price + '<br/>' : '';
 
     return item.description;
   }
@@ -43,7 +43,7 @@ function setupData(value) {
   item.taste = value.tppastilledegout;
 
   item.button_list = [{'title': 'En savoir plus', 'url': value.sysclickableuri}];
-  item.tags = value.tpcepagenomsplitgroup.split(';');
+  item.tags = angular.isDefined(value.tpcepagenomsplitgroup) ? value.tpcepagenomsplitgroup.split(';') : [];
 
   return item;
 }
@@ -53,13 +53,24 @@ function setupData(value) {
 angular.module('coveoFrontendChallengeApp')
   .controller('MainCtrl', function($scope, api) {
     $scope.wines = [];
-    $scope.gridItems = [];
 
-    api.wineByType({type: 'Merlot'}).then(function(result) {
-      angular.forEach(result.data.results, function(value) {
-        $scope.wines.push(value.raw);
-        $scope.gridItems.push(setupData(value.raw));
+    // api.wineByType({type: 'Merlot'})
+    // .success(function(result) {
+    //   angular.forEach(result.results, function(value) {
+    //     $scope.wines.push(setupData(value.raw));
+    //   });
+    // })
+    // .error(function(error) {
+    //   alert(error);
+    // });
+
+    api.wine()
+    .success(function(result) {
+      angular.forEach(result.results, function(value) {
+        $scope.wines.push(setupData(value.raw));
       });
-
+    })
+    .error(function(error) {
+      alert(error);
     });
   });

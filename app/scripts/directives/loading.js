@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('coveoFrontendChallengeApp')
-  .directive('loading', function () {
+  .directive('loading', function() {
     return {
       template: '<div><i class="fa fa-spin fa-refresh fa-5x"/></div>',
       restrict: 'EA',
