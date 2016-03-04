@@ -66,7 +66,7 @@
 	.container
 		.row
 			.col-md-12
-				.input-group.padding-t
+				.input-group.padding-top
 					.input-group-btn.search-panel
 						button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
 							span#search_concept Filter by
@@ -89,4 +89,4 @@
 						button.btn.btn-default(type='button')
 							span.glyphicon.glyphicon-search
 		.row
-			elastic-grid(items='elastic', filter='popup', timeout=1000)
+			elastic-grid.padding-top(items='elastic', filter='popup', timeout=1000)
