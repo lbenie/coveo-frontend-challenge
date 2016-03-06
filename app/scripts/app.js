@@ -6,7 +6,8 @@ angular
     'ngResource',
     'ngSanitize',
     'ngRoute',
-    'angular-elastic-grid'
+    'angular-elastic-grid',
+    'ui.bootstrap'
   ])
   .config(function($routeProvider, $httpProvider) {
     // initialise WOWJS

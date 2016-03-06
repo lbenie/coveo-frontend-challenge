@@ -5,20 +5,16 @@
 		i.fa.fa-bars.fa-2x.toggle-btn(data-toggle='collapse', data-target='#menu-content')
 		.menu-list
 			ul#menu-content.menu-content.collapse.out
-				li
-					a(href='#')
-						i.fa.fa-dashboard.fa-lg
-						|  Dashboard
 				li.collapsed.active(data-toggle='collapse', data-target='#products')
 					a(href='#')
 						i.fa.fa-gift.fa-lg
-						|  UI Elements
+						|  Options de recherche
 						span.arrow
 				ul#products.sub-menu.collapse
 					li.active
-						a(href='#') CSS3 Animation
+						a(href='#') Simple
 					li
-						a(href='#') General
+						a(href='#') Avancée
 					li
 						a(href='#') Buttons
 					li
@@ -61,26 +57,16 @@
 					a(href='#')
 						i.fa.fa-users.fa-lg
 						|  Users
-.section.margin-left.grid-bg
+
+
+section.margin-left.grid-bg
 	loading.absolute.center.center-loading
 	.container
 		.row
 			.col-md-12
 				.input-group.padding-top
-					.input-group-btn.search-panel
-						button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
-							span#search_concept Filtrer par
-							span.caret
-						ul.dropdown-menu(role='menu')
-							li(ng-repeat='option in simpleSearchOptions')
-								a(href='#{{option.name}}', ng-click='realSearch(option.val)')
-									| {{option.name}}
-							li.divider(ng-if='$last')
-								a(href='', ng-click='realSearch(option.val)')
-									| {{option.name}}
-
 					input#search_param(type='hidden', name='search_param', value='all')
-					input.form-control(type='text', name='x', placeholder='Recherche un vin')
+					input.form-control(type='text', name='x', ng-model='option', placeholder='Rechercher un vin', ng-keypress='($event.which === 13) ? search(option) : 0')
 					span.input-group-btn
 						button.btn.btn-default(type='button')
 							span.glyphicon.glyphicon-search

@@ -15,10 +15,10 @@ angular.module('coveoFrontendChallengeApp')
     return {
       simple: {
         wineByType: function(options) {
-          return $http.get(baseUrl + baseOptions.type + options.type + baseOptions.nbrResult + '20');
+          return $http.get(baseUrl + baseOptions.type + options.type + baseOptions.nbrResult + options.size);
         },
-        wine: function() {
-          return $http.get(baseUrl);
+        wine: function(options) {
+          return $http.get(baseUrl + baseOptions.nbrResult + options.size);
         }
       }
     };

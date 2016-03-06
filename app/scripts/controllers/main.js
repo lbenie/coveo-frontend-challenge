@@ -1,5 +1,6 @@
 'use strict';
 
+
 function setupData(value) {
   var item = {};
 
@@ -49,59 +50,42 @@ function setupData(value) {
 }
 
 angular.module('coveoFrontendChallengeApp')
-  .controller('MainCtrl', function($scope, api, $q, $rootScope) {
-    var qPromise = $q.defer();
-
-    $scope.simpleSearchOptions = [{
-      name: 'Par type',
-      val: 0
-    }];
+  .controller('MainCtrl', function($scope, api, $rootScope) {
     $rootScope.wines = [];
-
-    // api.simple.wine()
-    //   .success(function(result) {
-    //     var myArray = [];
-    //     angular.forEach(result.results, function(value) {
-    //       myArray.push(setupData(value.raw));
-    //     });
-    //     $rootScope.wines = myArray;
-    //   })
-    //   .error(function(error, status) {
-    //     if (error) { this.alert(status); }
-    //   });
+    $scope.option = '';
+    $scope.size = '16';
 
     function simpleSearch(option) {
-     switch (option) {
-        case 0:
-          return api.simple.wineByType({type: 'Merlot'});
-        case 1:
-          return api.simple.wine();
-     }
-   }
+      switch (option) {
+        case '0':
+          return api.simple.wineByType({type: 'Merlot', size: $scope.size});
+        case '1':
+          return api.simple.wine({size: $scope.size});
+      }
+    }
 
-   function search(option) {
+    function setupSearch(option) {
       // temporary holder for rearranging the data
       var myArray = [];
       var query = simpleSearch(option);
-
       query.success(function(result) {
         angular.forEach(result.results, function(value) {
           myArray.push(setupData(value.raw));
         });
-        qPromise.resolve(myArray);
+        $rootScope.wines = myArray;
       }).error(function(error, status) {
-        if (error) { this.alert(status); }
+        if (error) { alert(status); }
       });
-
-      return qPromise.promise;
     }
 
-    $scope.realSearch = function(option) {
-      search(option).then(function(result) {
-        $rootScope.wines = result;
-      });
+    $scope.search = function(value) {
+      setupSearch(value);
     };
 
 
-    // $scope.realSearch(1);
+
+
+    // first call to setup wines
+    setupSearch('1');
+
   });
