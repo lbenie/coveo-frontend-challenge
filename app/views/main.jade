@@ -12,7 +12,7 @@
 				li.collapsed.active(data-toggle='collapse', data-target='#products')
 					a(href='#')
 						i.fa.fa-gift.fa-lg
-						|  UI Elements 
+						|  UI Elements
 						span.arrow
 				ul#products.sub-menu.collapse
 					li.active
@@ -61,32 +61,28 @@
 					a(href='#')
 						i.fa.fa-users.fa-lg
 						|  Users
-.section.margin-left
-	loading.center-loading
+.section.margin-left.grid-bg
+	loading.absolute.center.center-loading
 	.container
 		.row
 			.col-md-12
 				.input-group.padding-top
 					.input-group-btn.search-panel
 						button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
-							span#search_concept Filter by
+							span#search_concept Filtrer par
 							span.caret
 						ul.dropdown-menu(role='menu')
-							li
-								a(href='#contains') Contains
-							li
-								a(href='#its_equal') It's equal
-							li
-								a(href='#greather_than') Greather than >
-							li
-								a(href='#less_than') Less than < 
-							li.divider
-							li
-								a(href='#all') Anything
+							li(ng-repeat='option in simpleSearchOptions')
+								a(href='#{{option.name}}', ng-click='realSearch(option.val)')
+									| {{option.name}}
+							li.divider(ng-if='$last')
+								a(href='', ng-click='realSearch(option.val)')
+									| {{option.name}}
+
 					input#search_param(type='hidden', name='search_param', value='all')
-					input.form-control(type='text', name='x', placeholder='Search term...')
+					input.form-control(type='text', name='x', placeholder='Recherche un vin')
 					span.input-group-btn
 						button.btn.btn-default(type='button')
 							span.glyphicon.glyphicon-search
-		.row
-			elastic-grid.padding-top(items='wines', filter='popup', timeout=1000)#list
+		.row.full-height
+			elastic-grid.padding-top(items='wines', filter='popup')#list

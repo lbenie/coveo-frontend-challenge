@@ -7,12 +7,12 @@ angular.module('coveoFrontendChallengeApp')
       restrict: 'EA',
       link: function postLink(scope, element) {
         scope.$on('loading-started', function() {
-          element.css({'display': ''});
+          $('#list').hide();
         });
-
         scope.$on('loading-complete', function() {
           element.hide();
           $('#list').addClass('animated zoomIn');
+          // $('#list').show();
         });
       }
     };

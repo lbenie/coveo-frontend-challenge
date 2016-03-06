@@ -43,34 +43,65 @@ function setupData(value) {
   item.taste = value.tppastilledegout;
 
   item.button_list = [{'title': 'En savoir plus', 'url': value.sysclickableuri}];
-  item.tags = angular.isDefined(value.tpcepagenomsplitgroup) ? value.tpcepagenomsplitgroup.split(';') : [];
+  item.tags = angular.isDefined(value.tppays) ? value.tppays.split(';') : [];
 
   return item;
 }
 
-
-
 angular.module('coveoFrontendChallengeApp')
-  .controller('MainCtrl', function($scope, api) {
-    $scope.wines = [];
+  .controller('MainCtrl', function($scope, api, $q, $rootScope) {
+    var qPromise = $q.defer();
 
-    api.simple.wineByType({type: 'Merlot'})
-    .success(function(result) {
-      angular.forEach(result.results, function(value) {
-        $scope.wines.push(setupData(value.raw));
-      });
-    })
-    .error(function(error) {
-      alert(error);
-    });
+    $scope.simpleSearchOptions = [{
+      name: 'Par type',
+      val: 0
+    }];
+    $rootScope.wines = [];
 
     // api.simple.wine()
-    // .success(function(result) {
-    //   angular.forEach(result.results, function(value) {
-    //     $scope.wines.push(setupData(value.raw));
+    //   .success(function(result) {
+    //     var myArray = [];
+    //     angular.forEach(result.results, function(value) {
+    //       myArray.push(setupData(value.raw));
+    //     });
+    //     $rootScope.wines = myArray;
+    //   })
+    //   .error(function(error, status) {
+    //     if (error) { this.alert(status); }
     //   });
-    // })
-    // .error(function(error) {
-    //   alert(error);
-    // });
+
+    function simpleSearch(option) {
+     switch (option) {
+        case 0:
+          return api.simple.wineByType({type: 'Merlot'});
+        case 1:
+          return api.simple.wine();
+     }
+   }
+
+   function search(option) {
+      // temporary holder for rearranging the data
+      var myArray = [];
+      var query = simpleSearch(option);
+
+      query.success(function(result) {
+        angular.forEach(result.results, function(value) {
+          myArray.push(setupData(value.raw));
+        });
+        qPromise.resolve(myArray);
+      }).error(function(error, status) {
+        if (error) { this.alert(status); }
+      });
+
+      return qPromise.promise;
+    }
+
+    $scope.realSearch = function(option) {
+      search(option).then(function(result) {
+        $rootScope.wines = result;
+      });
+    };
+
+
+    // $scope.realSearch(1);
   });
