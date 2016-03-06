@@ -2,61 +2,107 @@
 	.nav-side-menu
 		.brand
 			img(src='images/yeoman.png')
-		i.fa.fa-bars.fa-2x.toggle-btn(data-toggle='collapse', data-target='#menu-content')
-		.menu-list
-			ul#menu-content.menu-content.collapse.out
-				li.collapsed.active(data-toggle='collapse', data-target='#products')
-					a(href='#')
-						i.fa.fa-gift.fa-lg
-						|  Options de recherche
-						span.arrow
-				ul#products.sub-menu.collapse
-					li.active
-						a(href='#') Simple
-					li
-						a(href='#') Avancée
-					li
-						a(href='#') Buttons
-					li
-						a(href='#') Tabs & Accordions
-					li
-						a(href='#') Typography
-					li
-						a(href='#') FontAwesome
-					li
-						a(href='#') Slider
-					li
-						a(href='#') Panels
-					li
-						a(href='#') Widgets
-					li
-						a(href='#') Bootstrap Model
-				li.collapsed(data-toggle='collapse', data-target='#service')
-					a(href='#')
-						i.fa.fa-globe.fa-lg
-						|  Services 
-						span.arrow
-				ul#service.sub-menu.collapse
-					li New Service 1
-					li New Service 2
-					li New Service 3
-				li.collapsed(data-toggle='collapse', data-target='#new')
-					a(href='#')
-						i.fa.fa-car.fa-lg
-						|  New 
-						span.arrow
-				ul#new.sub-menu.collapse
-					li New New 1
-					li New New 2
-					li New New 3
-				li
-					a(href='#')
-						i.fa.fa-user.fa-lg
-						|  Profile
-				li
-					a(href='#')
-						i.fa.fa-users.fa-lg
-						|  Users
+		//- i.fa.fa-bars.fa-2x.toggle-btn(data-toggle='collapse', data-target='#menu-content')
+		.menu-list(ng-init='init()')
+			.checkbox
+				label(data-toggle='collapse', data-target='#collapseOne', ng-show='!searchType.advanced')
+					input(type='checkbox', ng-model='searchType.simple')
+					|  Recherche simple
+			#collapseOne.panel-collapse.collapse
+				.panel-body
+					.checkbox
+						#a(ng-hide='simpleSearchParam.country || simpleSearchParam.producer || simpleSearchParam.year')
+							input(type='checkbox', ng-model='simpleSearchParam.type')
+							| Par type
+					.checkbox
+						#b(ng-hide='simpleSearchParam.type || simpleSearchParam.producer || simpleSearchParam.year')
+							input(type='checkbox', ng-model='simpleSearchParam.country')
+							| Par pays
+					.checkbox
+						#c(ng-hide='simpleSearchParam.type || simpleSearchParam.country || simpleSearchParam.year')
+							input(type='checkbox', ng-model='simpleSearchParam.producer')
+							| Par producteur
+					.checkbox
+						#d(ng-hide='simpleSearchParam.type || simpleSearchParam.producer || simpleSearchParam.country')
+							input(type='checkbox', ng-model='simpleSearchParam.year')
+							| Par année
+			.checkbox
+				label(data-toggle='collapse', data-target='#collapseTwo', ng-show='!searchType.simple')
+					input(type='checkbox', ng-model='searchType.advanced')
+					|  Recherche Avancée
+			#collapseTwo.panel-collapse.collapse
+				.panel-body
+					.driving-license-kind
+						.checkbox
+							input(type='checkbox')
+							| Par type
+						.checkbox
+							input(type='checkbox')
+							| Par région
+						.checkbox
+							input(type='checkbox')
+							| Par producteur
+						.checkbox
+							input(type='checkbox')
+							| Par année
+
+			//- ul#menu-content.menu-content.collapse.out
+			//- 	li.collapsed.active(data-toggle='collapse', data-target='#products')
+			//- 		a(href='#/')
+			//- 			i.fa.fa-gift.fa-lg
+			//- 			|  Options de recherche
+			//- 			span.arrow
+			//- 	ul#products.sub-menu.collapse
+			//- 		li
+			//- 			| Simple
+			//- 			.checkbox
+			//- 				label
+			//- 					input(type='checkbox')
+			//- 					|  Check me out
+			//- 		li
+			//- 			a(href='#') Avancée
+			//- 		li
+			//- 			a(href='#') Buttons
+			//- 		li
+			//- 			a(href='#') Tabs & Accordions
+			//- 		li
+			//- 			a(href='#') Typography
+			//- 		li
+			//- 			a(href='#') FontAwesome
+			//- 		li
+			//- 			a(href='#') Slider
+			//- 		li
+			//- 			a(href='#') Panels
+			//- 		li
+			//- 			a(href='#') Widgets
+			//- 		li
+			//- 			a(href='#') Bootstrap Model
+			//- 	li.collapsed(data-toggle='collapse', data-target='#service')
+			//- 		a(href='#')
+			//- 			i.fa.fa-globe.fa-lg
+			//- 			|  Services 
+			//- 			span.arrow
+			//- 	ul#service.sub-menu.collapse
+			//- 		li New Service 1
+			//- 		li New Service 2
+			//- 		li New Service 3
+			//- 	li.collapsed(data-toggle='collapse', data-target='#new')
+			//- 		a(href='#')
+			//- 			i.fa.fa-car.fa-lg
+			//- 			|  New 
+			//- 			span.arrow
+			//- 	ul#new.sub-menu.collapse
+			//- 		li New New 1
+			//- 		li New New 2
+			//- 		li New New 3
+			//- 	li
+			//- 		a(href='#')
+			//- 			i.fa.fa-user.fa-lg
+			//- 			|  Profile
+			//- 	li
+			//- 		a(href='#')
+			//- 			i.fa.fa-users.fa-lg
+			//- 			|  Users
 
 
 section.margin-left.grid-bg
@@ -65,10 +111,25 @@ section.margin-left.grid-bg
 		.row
 			.col-md-12
 				.input-group.padding-top
-					input#search_param(type='hidden', name='search_param', value='all')
+					.input-group-btn.search-panel
+						button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+							span#search_size Nombre de résultats
+							span.caret
+						ul#ss.dropdown-menu(role='menu')
+							li
+								a(href='#10') 10
+							li
+								a(href='#20') 20
+							li
+								a(href='#30') 30
+					input#search_size_param(type='hidden', name='search_size_param', value='all')
+					input#search_type_param(type='hidden', name='search_type_param', value='all')
 					input.form-control(type='text', name='x', ng-model='option', placeholder='Rechercher un vin', ng-keypress='($event.which === 13) ? search(option) : 0')
 					span.input-group-btn
 						button.btn.btn-default(type='button')
 							span.glyphicon.glyphicon-search
+				.btn-group(uib-dropdown='')
+
+
 		.row.full-height
 			elastic-grid.padding-top(items='wines', filter='popup')#list
