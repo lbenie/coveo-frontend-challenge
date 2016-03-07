@@ -11,37 +11,64 @@ angular.module('coveoFrontendChallengeApp')
       type: '&q=@tpcepagenomsplitgroup==',
       country: '&q=@tppays==',
       year: '&q=@tpmillesime==',
-      producer: '&q@=tpproducteur',
+      price: '&q=@tpprixnum==',
+      query: '&q==',
       nbrResult: '&numberOfResults='
     };
     var advancedOptions = {
-      test: ''
-    }
+      type: '@tpcepagenomsplitgroup==',
+      country: '@tppays==',
+      year: '@tpmillesime==',
+      price: '@tpprixnum=='
+    };
 
     // Public API here
     return {
       simple: {
         wineByType: function(options) {
-          return $http.get(baseUrl + baseOptions.type + options.type + baseOptions.nbrResult + options.size);
+          return $http.get(`${baseUrl}${baseOptions.type}${options.type}${baseOptions.nbrResult}${options.size}`);
         },
         wineByCountry: function(options) {
-          return $http.get(baseUrl + baseOptions.country + options.country + baseOptions.nbrResult + options.size);
+          return $http.get(`${baseUrl}${baseOptions.country}${options.country}${baseOptions.nbrResult}${options.size}`);
         },
         wineByYear: function(options) {
-          return $http.get(baseUrl + baseOptions.year + options.year + baseOptions.nbrResult + options.size);
+          return $http.get(`${baseUrl}${baseOptions.year}${options.year}${baseOptions.nbrResult}${options.size}`);
         },
-        wineByProducer: function(options) {
-          return $http.get(baseUrl + baseOptions.producer + options.producer + baseOptions.nbrResult + options.size);
+        wineByPrice: function(options) {
+          return $http.get(`${baseUrl}${baseOptions.price}${options.price}${baseOptions.nbrResult}${options.size}`);
         },
         wine: function(options) {
-          return $http.get(baseUrl + baseOptions.nbrResult + options.size);
+          return $http.get(`${baseUrl}${baseOptions.nbrResult}${options.size}`);
+        },
+        wineByQuery: function(options) {
+          return $http.get(`${baseUrl}${baseOptions.query}${options.normal}${baseOptions.nbrResult}${options.size}`);
         }
       },
       advanced: {
-        wines: function(options) {
-          // iterate over all function
+        wine: function(options) {
+          var query = '';
+          var object = {};
+          if (angular.isDefined(options.query)) {
+            object.q = options.query;
+          }
 
-          return $http.post()
+          angular.forEach(options, function(value) {
+            if (value.flag) {
+              query += advancedOptions[value.name] + '(';
+              for (var i = 0; i < value.value.length; i++) {
+                if (i !== value.value.length - 1) {
+                  query += value.value[i] + ',';
+                } else {
+                  query += value.value[i];
+                }
+              }
+              query += ')';
+            }
+          });
+          object.aq = query;
+
+          console.log(object);
+          return $http.post(`${baseUrl}`, object);
         }
       }
     };

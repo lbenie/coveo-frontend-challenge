@@ -54,10 +54,12 @@ function setupData(value) {
 angular.module('coveoFrontendChallengeApp')
   .controller('MainCtrl', function($scope, api, $rootScope) {
     $rootScope.wines = [];
-    $scope.option = '';
+    $scope.searchInput = '';
     $scope.simpleSearchParam = {};
     $scope.searchType = {};
     $scope.advancedSearchParam = {};
+
+    var first = true;
     var size = '';
 
     $('.search-panel #ss').find('a').click(function(e) {
@@ -72,28 +74,32 @@ angular.module('coveoFrontendChallengeApp')
     function simpleSearch(option) {
       switch (option) {
         case 'type':
-          return api.simple.wineByType({type: $scope.option || 'merlot', size: size || '16'});
+          return api.simple.wineByType({type: $scope.searchInput.mainBar || 'merlot', size: size || 16});
         case 'all':
-          return api.simple.wine({size: size || '16'});
+          return api.simple.wine({size: size || 16});
         case 'country':
-          return api.simple.wineByCountry({country: $scope.option || 'france', size: size || '16'});
+          return api.simple.wineByCountry({country: $scope.searchInput.mainBar || 'france', size: size || 16});
         case 'year':
-          return api.simple.wineByYear({year: $scope.option || '2015', size: size || '16'});
-        case 'producer':
-          return api.simple.wineByProducer({producer: $scope.option || '', size: size || '16'});
+          return api.simple.wineByYear({year: $scope.searchInput.mainBar || 2015, size: size || 16});
+        case 'price':
+          return api.simple.wineByPrice({price: $scope.searchInput.mainBar || 21, size: size || 16});
+        case 'normal':
+        return api.simple.wineByQuery({normal: $scope.searchInput.mainBar || 'canada', size: size || 16});
       }
     }
 
     function advancedSearch(options) {
-      // merge all options
+      options.size = size || 16;
+      return api.advanced.wine(options);
     }
 
     function setupSearch(option) {
       // temporary holder for rearranging the data
       var myArray = [];
-      if ($scope.searchType.simple || true) {
-        var query = simpleSearch(option);
-        query.success(function(result) {
+      if ($scope.searchType.simple || first) {
+        first = false;
+        var simpleQuery = simpleSearch(option);
+        simpleQuery.success(function(result) {
           angular.forEach(result.results, function(value) {
             myArray.push(setupData(value.raw));
           });
@@ -102,12 +108,11 @@ angular.module('coveoFrontendChallengeApp')
           if (error) { alert(status); }
         });
       } else if ($scope.searchType.advanced) {
-        var query = advancedSearch(option);
-        query.success(function(result) {
+        var advancedQuery = advancedSearch(option);
+        advancedQuery.success(function(result) {
           angular.forEach(result.results, function(value) {
             myArray.push(setupData(value.raw));
           });
-
           $rootScope.wines = myArray;
         }).error(function(error, status) {
           if (error) { alert(status); }
@@ -116,33 +121,123 @@ angular.module('coveoFrontendChallengeApp')
     }
 
     $scope.search = function() {
-      console.log($scope.simpleSearchParam.type);
-      if ($scope.simpleSearchParam.type) {
-        setupSearch('type');
-      }
+      if ($scope.searchType.simple) {
+        if ($scope.simpleSearchParam.type) {
+          setupSearch('type');
+        }
 
+        else if ($scope.simpleSearchParam.year) {
+          setupSearch('year');
+        }
 
-      if ($scope.simpleSearchParam.year) {
-        setupSearch('year');
-      }
+        else if ($scope.simpleSearchParam.country) {
+          setupSearch('country');
+        }
 
+        else if ($scope.simpleSearchParam.price) {
+          setupSearch('price');
+        }
 
-      if ($scope.simpleSearchParam.country) {
-        setupSearch('country');
-      }
+        else {
+          setupSearch('normal');
+        }
+      } else if ($scope.searchType.advanced) {
+        // check for options
+        var options = {};
+        options.query = $scope.searchInput.mainBar;
+        var values = [];
 
+        if ($scope.advancedSearchParam.type) {
+          values = [];
+          angular.forEach($scope.advancedSearchParam.sub.type, function(v, key) {
+            values.push(key);
+          });
 
-      if ($scope.simpleSearchParam.producer) {
-        setupSearch('producer');
+          // if (angular.isDefined($scope.searchInput.sub.type.input)) {
+          //   values.push($scope.searchInput.sub.type.input || '');
+          // }
+          options.type = {
+            flag: $scope.advancedSearchParam.type,
+            name: 'type',
+            value: values || 'merlot'
+          };
+        }
+
+        if ($scope.advancedSearchParam.year) {
+          values = [];
+          if ($scope.advancedSearchParam.sub.year.thousandeight) {
+            values.push(2008);
+          }
+          if ($scope.advancedSearchParam.sub.year.thousandten) {
+            values.push(2010);
+          }
+          if ($scope.advancedSearchParam.sub.year.thousandfifthteen) {
+            values.push(2015);
+          }
+
+          // if (angular.isDefined($scope.searchInput.sub.year.input)) {
+          //   values.push($scope.searchInput.sub.year.input || '');
+          // }
+
+          options.year = {
+            flag: $scope.advancedSearchParam.year,
+            name: 'year',
+            value: values || 2015
+          };
+        }
+
+        if ($scope.advancedSearchParam.country) {
+          values = [];
+          angular.forEach($scope.advancedSearchParam.sub.country, function(v, key) {
+            values.push(key);
+          });
+
+          // if (angular.isDefined($scope.searchInput.sub.country.input)) {
+          //   values.push($scope.searchInput.sub.country.input || '');
+          // }
+
+          options.country = {
+            flag: $scope.advancedSearchParam.country,
+            name: 'country',
+            value: values || 'france'
+          };
+        }
+
+        if ($scope.advancedSearchParam.price) {
+          values = [];
+
+          if ($scope.advancedSearchParam.sub.price.twenty) {
+            values.push(20);
+          }
+
+          if ($scope.advancedSearchParam.sub.price.thirty) {
+            values.push(30);
+          }
+
+          if ($scope.advancedSearchParam.sub.price.sixty) {
+            values.push(60);
+          }
+
+          // if (angular.isDefined($scope.searchInput.sub.price.input)) {
+          //   values.push($scope.searchInput.sub.price.input || '');
+          // }
+
+          options.price = {
+            flag: $scope.advancedSearchParam.price,
+            name: 'price',
+            value: values || 30
+          };
+        }
+
+        setupSearch(options);
       }
     };
 
     $scope.init = function() {
       $scope.searchType.simple = false;
       $scope.searchType.advanced = false;
-    }
+    };
 
     // first call to setup wines
     setupSearch('all');
-
   });

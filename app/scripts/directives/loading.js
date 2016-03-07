@@ -8,6 +8,7 @@ angular.module('coveoFrontendChallengeApp')
       link: function postLink(scope, element) {
         scope.$on('loading-started', function() {
           $('#list').hide();
+          element.show();
         });
         scope.$on('loading-complete', function() {
           element.hide();

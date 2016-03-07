@@ -1,8 +1,7 @@
-.section
+section
 	.nav-side-menu
-		.brand
+		.brand.grid-bg
 			img(src='images/yeoman.png')
-		//- i.fa.fa-bars.fa-2x.toggle-btn(data-toggle='collapse', data-target='#menu-content')
 		.menu-list(ng-init='init()')
 			.checkbox
 				label(data-toggle='collapse', data-target='#collapseOne', ng-show='!searchType.advanced')
@@ -11,19 +10,19 @@
 			#collapseOne.panel-collapse.collapse
 				.panel-body
 					.checkbox
-						#a(ng-hide='simpleSearchParam.country || simpleSearchParam.producer || simpleSearchParam.year')
+						#a(ng-hide='simpleSearchParam.country || simpleSearchParam.price || simpleSearchParam.year')
 							input(type='checkbox', ng-model='simpleSearchParam.type')
 							| Par type
 					.checkbox
-						#b(ng-hide='simpleSearchParam.type || simpleSearchParam.producer || simpleSearchParam.year')
+						#b(ng-hide='simpleSearchParam.type || simpleSearchParam.price || simpleSearchParam.year')
 							input(type='checkbox', ng-model='simpleSearchParam.country')
 							| Par pays
 					.checkbox
 						#c(ng-hide='simpleSearchParam.type || simpleSearchParam.country || simpleSearchParam.year')
-							input(type='checkbox', ng-model='simpleSearchParam.producer')
-							| Par producteur
+							input(type='checkbox', ng-model='simpleSearchParam.price')
+							| Par prix
 					.checkbox
-						#d(ng-hide='simpleSearchParam.type || simpleSearchParam.producer || simpleSearchParam.country')
+						#d(ng-hide='simpleSearchParam.type || simpleSearchParam.price || simpleSearchParam.country')
 							input(type='checkbox', ng-model='simpleSearchParam.year')
 							| Par année
 			.checkbox
@@ -32,78 +31,94 @@
 					|  Recherche Avancée
 			#collapseTwo.panel-collapse.collapse
 				.panel-body
-					.driving-license-kind
-						.checkbox
-							input(type='checkbox')
-							| Par type
-						.checkbox
-							input(type='checkbox')
-							| Par région
-						.checkbox
-							input(type='checkbox')
-							| Par producteur
-						.checkbox
-							input(type='checkbox')
-							| Par année
-
-			//- ul#menu-content.menu-content.collapse.out
-			//- 	li.collapsed.active(data-toggle='collapse', data-target='#products')
-			//- 		a(href='#/')
-			//- 			i.fa.fa-gift.fa-lg
-			//- 			|  Options de recherche
-			//- 			span.arrow
-			//- 	ul#products.sub-menu.collapse
-			//- 		li
-			//- 			| Simple
-			//- 			.checkbox
-			//- 				label
-			//- 					input(type='checkbox')
-			//- 					|  Check me out
-			//- 		li
-			//- 			a(href='#') Avancée
-			//- 		li
-			//- 			a(href='#') Buttons
-			//- 		li
-			//- 			a(href='#') Tabs & Accordions
-			//- 		li
-			//- 			a(href='#') Typography
-			//- 		li
-			//- 			a(href='#') FontAwesome
-			//- 		li
-			//- 			a(href='#') Slider
-			//- 		li
-			//- 			a(href='#') Panels
-			//- 		li
-			//- 			a(href='#') Widgets
-			//- 		li
-			//- 			a(href='#') Bootstrap Model
-			//- 	li.collapsed(data-toggle='collapse', data-target='#service')
-			//- 		a(href='#')
-			//- 			i.fa.fa-globe.fa-lg
-			//- 			|  Services 
-			//- 			span.arrow
-			//- 	ul#service.sub-menu.collapse
-			//- 		li New Service 1
-			//- 		li New Service 2
-			//- 		li New Service 3
-			//- 	li.collapsed(data-toggle='collapse', data-target='#new')
-			//- 		a(href='#')
-			//- 			i.fa.fa-car.fa-lg
-			//- 			|  New 
-			//- 			span.arrow
-			//- 	ul#new.sub-menu.collapse
-			//- 		li New New 1
-			//- 		li New New 2
-			//- 		li New New 3
-			//- 	li
-			//- 		a(href='#')
-			//- 			i.fa.fa-user.fa-lg
-			//- 			|  Profile
-			//- 	li
-			//- 		a(href='#')
-			//- 			i.fa.fa-users.fa-lg
-			//- 			|  Users
-
+					.checkbox
+						input(type='checkbox', ng-model='advancedSearchParam.type', data-target='#collapseThree', data-toggle='collapse')
+						| Par type
+					#collapseThree.panel-collapse.collapse
+						.panel-body
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.type.merlot')
+								| Merlot
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.type.cabernet')
+								| Cabernet
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.type.syrah')
+								| Syrah
+						.container
+							.row
+								.col-sm-2
+									.input-group
+										input.form-control(type='text', name='x', ng-model='searchInput.sub.type.input', placeholder='Type')
+										span.input-group-btn
+											button.btn.btn-default(type='button')
+												span.glyphicon.glyphicon-search
+					.checkbox
+						input(type='checkbox', ng-model='advancedSearchParam.country', data-target='#collapseFour', data-toggle='collapse')
+						| Par pays
+					#collapseFour.panel-collapse.collapse
+						.panel-body
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.country.canada')
+								| Canada
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.country.france')
+								| France
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.country.argentine')
+								| Argentine
+						.container
+							.row
+								.col-sm-2
+									.input-group
+										input.form-control(type='text', name='x', ng-model='searchInput.sub.country.input', placeholder='Pays')
+										span.input-group-btn
+											button.btn.btn-default(type='button')
+												span.glyphicon.glyphicon-search
+					.checkbox
+						input(type='checkbox', ng-model='advancedSearchParam.price', data-target='#collapseFive', data-toggle='collapse')
+						| Par prix
+					#collapseFive.panel-collapse.collapse
+						.panel-body
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.price.twenty')
+								| 20 $
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.price.thirty')
+								| 30 $
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.price.sixty')
+								| 60 $
+						.container
+							.row
+								.col-sm-2
+									.input-group
+										input.form-control(type='text', name='x', ng-model='searchInput.sub.price.input', placeholder='Prix')
+										span.input-group-btn
+											button.btn.btn-default(type='button')
+												span.glyphicon.glyphicon-search
+					.checkbox
+						input(type='checkbox', ng-model='advancedSearchParam.year', data-target='#collapseSix', data-toggle='collapse')
+						| Par année
+					#collapseSix.panel-collapse.collapse
+						.panel-body
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.year.thousandeight')
+								| 2008
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.year.thousandten')
+								| 2010
+							.checkbox
+								input(type='checkbox', ng-model='advancedSearchParam.sub.year.thousandfifthteen')
+								| 2015
+						.container
+							.row
+								.col-sm-2
+									.input-group
+										input.form-control(type='text', name='x', ng-model='searchInput.sub.year.input', placeholder='Année')
+										span.input-group-btn
+											button.btn.btn-default(type='button')
+												span.glyphicon.glyphicon-search
 
 section.margin-left.grid-bg
 	loading.absolute.center.center-loading
@@ -123,13 +138,9 @@ section.margin-left.grid-bg
 							li
 								a(href='#30') 30
 					input#search_size_param(type='hidden', name='search_size_param', value='all')
-					input#search_type_param(type='hidden', name='search_type_param', value='all')
-					input.form-control(type='text', name='x', ng-model='option', placeholder='Rechercher un vin', ng-keypress='($event.which === 13) ? search(option) : 0')
+					input.form-control(type='text', name='x', ng-model='searchInput.mainBar', placeholder='Rechercher un vin', ng-keypress='($event.which === 13) ? search(searchInput) : 0')
 					span.input-group-btn
 						button.btn.btn-default(type='button')
 							span.glyphicon.glyphicon-search
-				.btn-group(uib-dropdown='')
-
-
 		.row.full-height
 			elastic-grid.padding-top(items='wines', filter='popup')#list
