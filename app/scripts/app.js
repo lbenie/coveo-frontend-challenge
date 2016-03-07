@@ -10,9 +10,6 @@ angular
     'ui.bootstrap'
   ])
   .config(function($routeProvider, $httpProvider) {
-    // initialise WOWJS
-    new WOW().init();
-
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

@@ -8,7 +8,7 @@ angular.module('coveoFrontendChallengeApp')
     var token = '6318103b-f9da-437c-854b-9e6f1f44e27b';
     var baseUrl = 'https://cloudplatform.coveo.com/rest/search?access_token=' + token;
     var baseOptions = {
-      type: '&q=@tpcepagenomsplitgroup==',
+      typ: '&q=@tpcepagenomsplitgroup==',
       country: '&q=@tppays==',
       year: '&q=@tpmillesime==',
       price: '&q=@tpprixnum==',
@@ -16,7 +16,7 @@ angular.module('coveoFrontendChallengeApp')
       nbrResult: '&numberOfResults='
     };
     var advancedOptions = {
-      type: '@tpcepagenomsplitgroup==',
+      typ: '@tpcepagenomsplitgroup==',
       country: '@tppays==',
       year: '@tpmillesime==',
       price: '@tpprixnum=='
@@ -26,22 +26,22 @@ angular.module('coveoFrontendChallengeApp')
     return {
       simple: {
         wineByType: function(options) {
-          return $http.get(`${baseUrl}${baseOptions.type}${options.type}${baseOptions.nbrResult}${options.size}`);
+          return $http.get(baseUrl + baseOptions.typ + options.typ + baseOptions.nbrResult + options.siz);
         },
         wineByCountry: function(options) {
-          return $http.get(`${baseUrl}${baseOptions.country}${options.country}${baseOptions.nbrResult}${options.size}`);
+          return $http.get(baseUrl + baseOptions.country + options.country + baseOptions.nbrResult + options.siz);
         },
         wineByYear: function(options) {
-          return $http.get(`${baseUrl}${baseOptions.year}${options.year}${baseOptions.nbrResult}${options.size}`);
+          return $http.get(baseUrl + baseOptions.year + options.year + baseOptions.nbrResult + options.siz);
         },
         wineByPrice: function(options) {
-          return $http.get(`${baseUrl}${baseOptions.price}${options.price}${baseOptions.nbrResult}${options.size}`);
+          return $http.get(baseUrl + baseOptions.price + options.price + baseOptions.nbrResult + options.siz);
         },
         wine: function(options) {
-          return $http.get(`${baseUrl}${baseOptions.nbrResult}${options.size}`);
+          return $http.get(baseUrl + baseOptions.nbrResult + options.siz);
         },
         wineByQuery: function(options) {
-          return $http.get(`${baseUrl}${baseOptions.query}${options.normal}${baseOptions.nbrResult}${options.size}`);
+          return $http.get(baseUrl + baseOptions.query + options.normal + baseOptions.nbrResult + options.siz);
         }
       },
       advanced: {
@@ -67,8 +67,7 @@ angular.module('coveoFrontendChallengeApp')
           });
           object.aq = query;
 
-          console.log(object);
-          return $http.post(`${baseUrl}`, object);
+          return $http.post(baseUrl, object);
         }
       }
     };

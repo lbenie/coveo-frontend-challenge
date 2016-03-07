@@ -32,24 +32,24 @@ section
 			#collapseTwo.panel-collapse.collapse
 				.panel-body
 					.checkbox
-						input(type='checkbox', ng-model='advancedSearchParam.type', data-target='#collapseThree', data-toggle='collapse')
+						input(type='checkbox', ng-model='advancedSearchParam.typ', data-target='#collapseThree', data-toggle='collapse')
 						| Par type
 					#collapseThree.panel-collapse.collapse
 						.panel-body
 							.checkbox
-								input(type='checkbox', ng-model='advancedSearchParam.sub.type.merlot')
+								input(type='checkbox', ng-model='advancedSearchParam.sub.typ.merlot')
 								| Merlot
 							.checkbox
-								input(type='checkbox', ng-model='advancedSearchParam.sub.type.cabernet')
+								input(type='checkbox', ng-model='advancedSearchParam.sub.typ.cabernet')
 								| Cabernet
 							.checkbox
-								input(type='checkbox', ng-model='advancedSearchParam.sub.type.syrah')
+								input(type='checkbox', ng-model='advancedSearchParam.sub.typ.syrah')
 								| Syrah
 						.container
 							.row
 								.col-sm-2
 									.input-group
-										input.form-control(type='text', name='x', ng-model='searchInput.typeBar', placeholder='Type', ng-keypress='($event.which === 13) ? search(searchInput) : 0', uib-typeahead='type for type in typeaheadTypes | filter:$viewValue | limitTo:8')
+										input.form-control(type='text', name='x', ng-model='searchInput.typeBar', placeholder='Type', ng-keypress='($event.which === 13) ? search(searchInput) : 0', uib-typeahead='typ for typ in typeaheadTypes | filter:$viewValue | limitTo:8')
 										span.input-group-btn
 											button.btn.btn-default(type='button')
 												span.glyphicon.glyphicon-search
@@ -138,7 +138,7 @@ section.margin-left.grid-bg
 							li
 								a(href='#30') 30
 					input#search_size_param(type='hidden', name='search_size_param', value='all')
-					input.form-control(type='text', name='x', ng-model='searchInput.mainBar', placeholder='Rechercher un vin', ng-keypress='($event.which === 13) ? search(searchInput) : 0')
+					input.form-control(type='text', name='x', ng-model='searchInput.mainBar', placeholder='Rechercher une bouteille', ng-keypress='($event.which === 13) ? search(searchInput) : 0')
 					span.input-group-btn
 						button.btn.btn-default(type='button')
 							span.glyphicon.glyphicon-search

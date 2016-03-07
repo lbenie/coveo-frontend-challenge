@@ -51,6 +51,7 @@ function setupData(value) {
   return item;
 }
 
+angular.element('.collapse').collapse();
 
 angular.module('coveoFrontendChallengeApp')
   .controller('MainCtrl', function($scope, api, $rootScope) {
@@ -62,12 +63,14 @@ angular.module('coveoFrontendChallengeApp')
     $scope.advancedSearchParam = {};
     $scope.searchType = {};
 
-    $scope.typeaheadTypes = ['gamay', 'grenache', 'cabernet franc', 'cabernet sauvignon', 'tannat', 'tempranillo', 'zinfandel', 'auxerois', 'cot', 'malbec', 'pinot noir', 'nebbiolo', 'sangioevese', 'merlot'];
+    $scope.typeaheadTypes = ['gamay', 'grenache', 'cabernet franc', 'cabernet sauvignon', 'tannat', 'tempranillo',
+    'zinfandel', 'auxerois', 'cot', 'malbec', 'pinot noir', 'nebbiolo', 'sangioevese', 'merlot'];
 
-    $scope.typeaheadCountries = ['canada', 'france', 'argentine', 'mexique', 'italie', 'liban', 'espagne', 'australie', 'tunisie', 'belgique', 'macédoine', 'luxembourg', 'hongrie'];
+    $scope.typeaheadCountries = ['canada', 'france', 'argentine', 'mexique', 'italie', 'liban', 'espagne', 'australie',
+    'tunisie', 'belgique', 'macédoine', 'luxembourg', 'hongrie'];
 
     var first = true;
-    var size = '';
+    var siz = '';
 
     $('.search-panel #ss').find('a').click(function(e) {
       e.preventDefault();
@@ -75,30 +78,30 @@ angular.module('coveoFrontendChallengeApp')
       var concept = $(this).text();
       $('.search-panel span#search_size').text(concept);
       $('.input-group #search_param_param').val(param);
-      size = param;
+      siz = param;
     });
 
     // simple search api calls
     function simpleSearch(option) {
       switch (option) {
         case 'type':
-          return api.simple.wineByType({type: $scope.searchInput.mainBar || 'merlot', size: size || 16});
+          return api.simple.wineByType({typ: $scope.searchInput.mainBar || 'merlot', siz: siz || 16});
         case 'all':
-          return api.simple.wine({size: size || 16});
+          return api.simple.wine({siz: siz || 16});
         case 'country':
-          return api.simple.wineByCountry({country: $scope.searchInput.mainBar || 'france', size: size || 16});
+          return api.simple.wineByCountry({country: $scope.searchInput.mainBar || 'france', siz: siz || 16});
         case 'year':
-          return api.simple.wineByYear({year: $scope.searchInput.mainBar || 2015, size: size || 16});
+          return api.simple.wineByYear({year: $scope.searchInput.mainBar || 2015, siz: siz || 16});
         case 'price':
-          return api.simple.wineByPrice({price: $scope.searchInput.mainBar || 21, size: size || 16});
+          return api.simple.wineByPrice({price: $scope.searchInput.mainBar || 21, siz: siz || 16});
         case 'normal':
-        return api.simple.wineByQuery({normal: $scope.searchInput.mainBar || 'canada', size: size || 16});
+        return api.simple.wineByQuery({normal: $scope.searchInput.mainBar || 'canada', siz: siz || 16});
       }
     }
 
     // advanced search api call
     function advancedSearch(options) {
-      options.size = size || 16;
+      options.siz = siz || 16;
       return api.advanced.wine(options);
     }
 
@@ -134,7 +137,7 @@ angular.module('coveoFrontendChallengeApp')
     // search function
     $scope.search = function() {
       if ($scope.searchType.simple) {
-        if ($scope.simpleSearchParam.type) {
+        if ($scope.simpleSearchParam.typ) {
           setupSearch('type');
         }
 
@@ -159,17 +162,24 @@ angular.module('coveoFrontendChallengeApp')
         options.query = $scope.searchInput.mainBar;
         var values = [];
 
-        if ($scope.advancedSearchParam.type) {
+        console.log($scope.advancedSearchParam.typ);
+        if ($scope.advancedSearchParam.typ) {
           values = [];
-          angular.forEach($scope.advancedSearchParam.sub.type, function(v, key) {
-            values.push(key);
-          });
+
+          console.log($scope.advancedSearchParam.sub.typ);
+          if (angular.isDefined($scope.advancedSearchParam.sub.typ)) {
+            angular.forEach($scope.advancedSearchParam.sub.typ, function(v, key) {
+              if (v) {
+                values.push(key);
+              }
+            });
+          }
 
           if (angular.isDefined($scope.searchInput.typeBar)) {
             values.push($scope.searchInput.typeBar || '');
           }
-          options.type = {
-            flag: $scope.advancedSearchParam.type,
+          options.typ = {
+            flag: $scope.advancedSearchParam.typ,
             name: 'type',
             value: values || 'merlot'
           };
@@ -201,7 +211,9 @@ angular.module('coveoFrontendChallengeApp')
         if ($scope.advancedSearchParam.country) {
           values = [];
           angular.forEach($scope.advancedSearchParam.sub.country, function(v, key) {
-            values.push(key);
+            if (v) {
+              values.push(key);
+            }
           });
 
           if (angular.isDefined($scope.searchInput.countryBar)) {
@@ -239,7 +251,6 @@ angular.module('coveoFrontendChallengeApp')
             value: values || 30
           };
         }
-
 
         setupSearch(options);
       }

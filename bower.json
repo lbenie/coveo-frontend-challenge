@@ -14,7 +14,6 @@
     "restangular": "^1.5.2",
     "font-awesome": "^4.5.0",
     "animate.css": "animate-css#^3.5.1",
-    "wow": "wowjs#^1.1.2",
     "angular-elastic-grid": "^1.0.4",
     "angular-bootstrap": "^1.2.3"
   },
