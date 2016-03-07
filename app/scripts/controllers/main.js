@@ -1,6 +1,7 @@
 'use strict';
 
-
+// format the data for angular-elastic-grid
+// https://github.com/lbenie/angular-elastic-grid#usage
 function setupData(value) {
   var item = {};
 
@@ -53,11 +54,13 @@ function setupData(value) {
 
 angular.module('coveoFrontendChallengeApp')
   .controller('MainCtrl', function($scope, api, $rootScope) {
+    // has to be root because of scoping issues
     $rootScope.wines = [];
+
     $scope.searchInput = '';
     $scope.simpleSearchParam = {};
-    $scope.searchType = {};
     $scope.advancedSearchParam = {};
+    $scope.searchType = {};
 
     var first = true;
     var size = '';
@@ -71,6 +74,7 @@ angular.module('coveoFrontendChallengeApp')
       size = param;
     });
 
+    // simple search api calls
     function simpleSearch(option) {
       switch (option) {
         case 'type':
@@ -88,6 +92,7 @@ angular.module('coveoFrontendChallengeApp')
       }
     }
 
+    // advanced search api call
     function advancedSearch(options) {
       options.size = size || 16;
       return api.advanced.wine(options);
@@ -98,28 +103,31 @@ angular.module('coveoFrontendChallengeApp')
       var myArray = [];
       if ($scope.searchType.simple || first) {
         first = false;
-        var simpleQuery = simpleSearch(option);
-        simpleQuery.success(function(result) {
+        simpleSearch(option)
+          .success(function(result) {
           angular.forEach(result.results, function(value) {
+            // setup data for angular-elastic-grid
             myArray.push(setupData(value.raw));
           });
           $rootScope.wines = myArray;
         }).error(function(error, status) {
-          if (error) { alert(status); }
+          if (error) { alert('Error from server with status code : ' + status); }
         });
       } else if ($scope.searchType.advanced) {
-        var advancedQuery = advancedSearch(option);
-        advancedQuery.success(function(result) {
+        advancedSearch(option)
+          .success(function(result) {
           angular.forEach(result.results, function(value) {
+            // setup data for angular-elastic-grid
             myArray.push(setupData(value.raw));
           });
           $rootScope.wines = myArray;
         }).error(function(error, status) {
-          if (error) { alert(status); }
+          if (error) { alert('Error from server with status code : ' + status); }
         });
       }
     }
 
+    // search function
     $scope.search = function() {
       if ($scope.searchType.simple) {
         if ($scope.simpleSearchParam.type) {
@@ -233,6 +241,7 @@ angular.module('coveoFrontendChallengeApp')
       }
     };
 
+    // collapse
     $scope.init = function() {
       $scope.searchType.simple = false;
       $scope.searchType.advanced = false;
