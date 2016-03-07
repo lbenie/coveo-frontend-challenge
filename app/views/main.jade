@@ -28,7 +28,7 @@ section
 			.checkbox
 				label(data-toggle='collapse', data-target='#collapseTwo', ng-show='!searchType.simple')
 					input(type='checkbox', ng-model='searchType.advanced')
-					|  Recherche Avancée
+					|  Recherche avancée
 			#collapseTwo.panel-collapse.collapse
 				.panel-body
 					.checkbox
@@ -49,7 +49,7 @@ section
 							.row
 								.col-sm-2
 									.input-group
-										input.form-control(type='text', name='x', ng-model='searchInput.sub.type.input', placeholder='Type')
+										input.form-control(type='text', name='x', ng-model='searchInput.typeBar', placeholder='Type', ng-keypress='($event.which === 13) ? search(searchInput) : 0', uib-typeahead='type for type in typeaheadTypes | filter:$viewValue | limitTo:8')
 										span.input-group-btn
 											button.btn.btn-default(type='button')
 												span.glyphicon.glyphicon-search
@@ -71,10 +71,11 @@ section
 							.row
 								.col-sm-2
 									.input-group
-										input.form-control(type='text', name='x', ng-model='searchInput.sub.country.input', placeholder='Pays')
+										input.form-control(type='text', name='x', ng-model='searchInput.countryBar', placeholder='Pays', ng-keypress='($event.which === 13) ? search(searchInput) : 0', uib-typeahead='country for country in typeaheadCountries | filter:$viewValue | limitTo:8')
 										span.input-group-btn
 											button.btn.btn-default(type='button')
 												span.glyphicon.glyphicon-search
+										ul.dropdown-menu(role='listbox')
 					.checkbox
 						input(type='checkbox', ng-model='advancedSearchParam.price', data-target='#collapseFive', data-toggle='collapse')
 						| Par prix
@@ -93,7 +94,7 @@ section
 							.row
 								.col-sm-2
 									.input-group
-										input.form-control(type='text', name='x', ng-model='searchInput.sub.price.input', placeholder='Prix')
+										input.form-control(type='text', name='x', ng-model='searchInput.priceBar', placeholder='Prix', ng-keypress='($event.which === 13) ? search(searchInput) : 0')
 										span.input-group-btn
 											button.btn.btn-default(type='button')
 												span.glyphicon.glyphicon-search
@@ -115,11 +116,10 @@ section
 							.row
 								.col-sm-2
 									.input-group
-										input.form-control(type='text', name='x', ng-model='searchInput.sub.year.input', placeholder='Année')
+										input.form-control(type='text', name='x', ng-model='searchInput.yearBar', placeholder='Année', ng-keypress='($event.which === 13) ? search(searchInput) : 0')
 										span.input-group-btn
 											button.btn.btn-default(type='button')
 												span.glyphicon.glyphicon-search
-
 section.margin-left.grid-bg
 	loading.absolute.center.center-loading
 	.container
@@ -128,7 +128,7 @@ section.margin-left.grid-bg
 				.input-group.padding-top
 					.input-group-btn.search-panel
 						button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
-							span#search_size Nombre de résultats
+							span#search_size Nombre de résultats&nbsp;
 							span.caret
 						ul#ss.dropdown-menu(role='menu')
 							li

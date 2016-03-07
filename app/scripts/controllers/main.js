@@ -62,6 +62,10 @@ angular.module('coveoFrontendChallengeApp')
     $scope.advancedSearchParam = {};
     $scope.searchType = {};
 
+    $scope.typeaheadTypes = ['gamay', 'grenache', 'cabernet franc', 'cabernet sauvignon', 'tannat', 'tempranillo', 'zinfandel', 'auxerois', 'cot', 'malbec', 'pinot noir', 'nebbiolo', 'sangioevese', 'merlot'];
+
+    $scope.typeaheadCountries = ['canada', 'france', 'argentine', 'mexique', 'italie', 'liban', 'espagne', 'australie', 'tunisie', 'belgique', 'macédoine', 'luxembourg', 'hongrie'];
+
     var first = true;
     var size = '';
 
@@ -161,9 +165,9 @@ angular.module('coveoFrontendChallengeApp')
             values.push(key);
           });
 
-          // if (angular.isDefined($scope.searchInput.sub.type.input)) {
-          //   values.push($scope.searchInput.sub.type.input || '');
-          // }
+          if (angular.isDefined($scope.searchInput.typeBar)) {
+            values.push($scope.searchInput.typeBar || '');
+          }
           options.type = {
             flag: $scope.advancedSearchParam.type,
             name: 'type',
@@ -183,9 +187,9 @@ angular.module('coveoFrontendChallengeApp')
             values.push(2015);
           }
 
-          // if (angular.isDefined($scope.searchInput.sub.year.input)) {
-          //   values.push($scope.searchInput.sub.year.input || '');
-          // }
+          if (angular.isDefined($scope.searchInput.yearBar)) {
+            values.push($scope.searchInput.yearBar || '');
+          }
 
           options.year = {
             flag: $scope.advancedSearchParam.year,
@@ -200,9 +204,9 @@ angular.module('coveoFrontendChallengeApp')
             values.push(key);
           });
 
-          // if (angular.isDefined($scope.searchInput.sub.country.input)) {
-          //   values.push($scope.searchInput.sub.country.input || '');
-          // }
+          if (angular.isDefined($scope.searchInput.countryBar)) {
+            values.push($scope.searchInput.countryBar || '');
+          }
 
           options.country = {
             flag: $scope.advancedSearchParam.country,
@@ -226,16 +230,16 @@ angular.module('coveoFrontendChallengeApp')
             values.push(60);
           }
 
-          // if (angular.isDefined($scope.searchInput.sub.price.input)) {
-          //   values.push($scope.searchInput.sub.price.input || '');
-          // }
-
+          if (angular.isDefined($scope.searchInput.priceBar)) {
+            values.push($scope.searchInput.priceBar || '');
+          }
           options.price = {
             flag: $scope.advancedSearchParam.price,
             name: 'price',
             value: values || 30
           };
         }
+
 
         setupSearch(options);
       }

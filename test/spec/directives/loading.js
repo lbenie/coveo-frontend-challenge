@@ -4,7 +4,7 @@ describe('Directive: loading', function () {
 
   // load the directive's module
   beforeEach(module('coveoFrontendChallengeApp'));
-
+  
   var element,
     scope;
 
