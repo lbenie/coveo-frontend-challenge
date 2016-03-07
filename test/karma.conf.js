@@ -32,7 +32,6 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/lodash/lodash.js',
       'bower_components/restangular/dist/restangular.js',
-      'bower_components/wow/dist/wow.js',
       'bower_components/jquery-elastic-grid/js/modernizr.custom.js',
       'bower_components/jquery-elastic-grid/js/classie.js',
       'bower_components/jquery-elastic-grid/js/elastic_grid.js',

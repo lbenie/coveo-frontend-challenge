@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: loading', function () {
+describe('Directive: loading', function() {
 
   // load the directive's module
   beforeEach(module('coveoFrontendChallengeApp'));
@@ -8,13 +8,14 @@ describe('Directive: loading', function () {
   var element,
     scope;
 
-  beforeEach(inject(function ($rootScope) {
+  beforeEach(inject(function($rootScope) {
     scope = $rootScope.$new();
   }));
 
-  // it('should make hidden element visible', inject(function ($compile) {
-  //   element = angular.element('<loading></loading>');
-  //   element = $compile(element)(scope);
-  //   expect(element.text()).toBe('this is the loading directive');
-  // }));
+  it('should make hidden element visible', inject(function($compile) {
+    element = angular.element('<loading></loading>');
+    element = $compile(element)(scope);
+    scope.$digest();
+    expect(element.html().toBe('<div><i class="fa fa-spin fa-refresh fa-5x"/></div>'));
+  }));
 });
