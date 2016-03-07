@@ -180,7 +180,7 @@ angular.module('coveoFrontendChallengeApp')
           }
           options.typ = {
             flag: $scope.advancedSearchParam.typ,
-            name: 'type',
+            name: 'typ',
             value: values || 'merlot'
           };
         }
