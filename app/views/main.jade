@@ -3,7 +3,7 @@ section
 		.brand.grid-bg
 			img(src='images/yeoman.png')
 		.menu-list(ng-init='init()')
-			.checkbox
+			.checkbox.margin-checkbox
 				label(data-toggle='collapse', data-target='#collapseOne', ng-show='!searchType.advanced')
 					input(type='checkbox', ng-model='searchType.simple')
 					|  Recherche simple
@@ -25,7 +25,7 @@ section
 						#d(ng-hide='simpleSearchParam.type || simpleSearchParam.price || simpleSearchParam.country')
 							input(type='checkbox', ng-model='simpleSearchParam.year')
 							| Par année
-			.checkbox
+			.checkbox.margin-checkbox
 				label(data-toggle='collapse', data-target='#collapseTwo', ng-show='!searchType.simple')
 					input(type='checkbox', ng-model='searchType.advanced')
 					|  Recherche avancée
